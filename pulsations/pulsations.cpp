@@ -2,7 +2,6 @@
 
 #define PI 3.1415926535897932384626433832795
 
-// To enable, remove comments and define harmonics.
 Pulsator::Pulsator() {
     // Define harmonics that shall be generated
     harmonics.insert(Harmonic{ 1, 0.02 });
@@ -20,16 +19,11 @@ const double Pulsator::getPulsations(const double angle) {
     double torque = 0.0f;
     for (const auto& harmonic : harmonics) {
         torque += harmonic.magnitude * cos(harmonic.order * angle);
-    } 
+    }
     return torque;
 }
 
 const double Pulsator::getSample(double rotor_angle) {
-    
-    // Compute only if harmonics have been defined
-    if (harmonics.size() > 0) {
-        double angle = convertAngle(rotor_angle);
-        return getPulsations(angle);
-    }
-    return 0.0f;
+    double converted_angle = convertAngle(rotor_angle);
+    return getPulsations(converted_angle);
 }
